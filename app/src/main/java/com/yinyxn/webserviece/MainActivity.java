@@ -20,21 +20,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView resultView;
     private Button queryButton;
     String result;
-    Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            if (msg.what == 0x123) {
-                resultView.setText(result);
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        phoneSecEditText = (EditText) findViewById(R.id.phone_sec);
+        phoneSecEditText = (EditText) findViewById(R.id.phone_number);
         resultView = (TextView) findViewById(R.id.result_text);
-        queryButton = (Button) findViewById(R.id.query_btn);
+        queryButton = (Button) findViewById(R.id.button_query);
         queryButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 // 简单判断用户输入的手机号码（段）是否合法
                 if ("".equals(phoneSec) || phoneSec.length() < 7) {
                     // 给出错误提示
-                    phoneSecEditText.setError("您输入的手机号码（段）有误！");
+                    phoneSecEditText.setError("号码有误！");
                     phoneSecEditText.requestFocus();
                     // 将显示查询结果的TextView清空
                     resultView.setText("");
@@ -107,4 +100,12 @@ public class MainActivity extends AppCompatActivity {
         // Message message = new Message();
         handler.sendEmptyMessage(0x123);
     }
+
+    Handler handler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            if (msg.what == 0x123) {
+                resultView.setText(result);
+            }
+        }
+    };
 }
